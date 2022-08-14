@@ -1,5 +1,7 @@
 package com.musalasoft.drone.station.model;
 
+import com.musalasoft.drone.station.util.MedicationFieldsValidatorUtil;
+
 import java.util.Objects;
 
 public class Medication {
@@ -9,6 +11,12 @@ public class Medication {
     private final String image;
 
     public Medication(String name, double weight, String code, String image) {
+        if (Objects.isNull(name) || MedicationFieldsValidatorUtil.validateMedicationName(name)) {
+            throw new RuntimeException("Invalid medication name provided, " + name);
+        }
+        if (Objects.isNull(code) || MedicationFieldsValidatorUtil.validateMedicationCode(code)) {
+            throw new RuntimeException("Invalid medication code provided, " + code);
+        }
         this.name = name;
         this.weight = weight;
         this.code = code;
