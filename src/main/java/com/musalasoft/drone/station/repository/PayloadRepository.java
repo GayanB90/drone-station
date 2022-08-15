@@ -1,10 +1,9 @@
 package com.musalasoft.drone.station.repository;
 
-import com.musalasoft.drone.station.model.Drone;
+import com.musalasoft.drone.station.model.Payload;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DroneRepository extends CrudRepository<Drone, String> {
-    Iterable<Drone> findAll();
+public interface PayloadRepository extends CrudRepository<Payload, String> {
 }
