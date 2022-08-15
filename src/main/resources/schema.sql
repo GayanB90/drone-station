@@ -1,8 +1,8 @@
 CREATE TABLE drone (
-    serialNo          VARCHAR NOT NULL PRIMARY KEY,
-    model             VARCHAR NOT NULL,
-    state             VARCHAR NOT NULL,
-    currentPayloadId  VARCHAR
+    serial_no          VARCHAR NOT NULL PRIMARY KEY,
+    model             INTEGER NOT NULL,
+    state             INTEGER NOT NULL,
+    current_payload_id  VARCHAR
 );
 
 CREATE TABLE payload (
@@ -12,16 +12,16 @@ CREATE TABLE payload (
 CREATE TABLE medication (
     code              VARCHAR NOT NULL PRIMARY KEY,
     name              VARCHAR NOT NULL,
-    weight            DECFLOAT(4) DEFAULT 0,
+    weight            DOUBLE DEFAULT 0,
     image             VARCHAR
 );
 
 CREATE TABLE drone_payload (
-    droneSerialNo          VARCHAR NOT NULL,
-    payloadId                VARCHAR NOT NULL
+    drone_serial_no          VARCHAR NOT NULL,
+    payload_id                VARCHAR NOT NULL
 );
 
 CREATE TABLE medication_payload (
-    droneSerialNo          VARCHAR NOT NULL,
-    medicationCode              VARCHAR NOT NULL
+    droneSerial_no          VARCHAR NOT NULL,
+    medication_code              VARCHAR NOT NULL
 );

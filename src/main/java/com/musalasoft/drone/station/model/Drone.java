@@ -14,9 +14,10 @@ public class Drone {
     @Id
     private String serialNo;
     private  DroneModel model;
-    private double batteryLevel;
     private DroneState state;
 
+    @Transient
+    private double batteryLevel;
     @Transient
     private Payload payload;
 
