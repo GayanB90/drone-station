@@ -1,9 +1,6 @@
 package com.musalasoft.drone.station.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -17,7 +14,7 @@ public class Drone {
     private DroneState state;
     private double batteryLevel;
 
-    @Transient
+    @OneToOne(mappedBy = "drone")
     private Payload payload;
 
     public Drone() {

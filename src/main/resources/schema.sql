@@ -6,8 +6,9 @@ CREATE TABLE drone (
     battery_level      DOUBLE
 );
 
-CREATE TABLE payload (
-    id                VARCHAR NOT NULL PRIMARY KEY
+CREATE TABLE current_payload (
+    payload_id                VARCHAR NOT NULL PRIMARY KEY,
+    drone_serial_no          VARCHAR NOT NULL UNIQUE
 );
 
 CREATE TABLE medication (
@@ -15,11 +16,6 @@ CREATE TABLE medication (
     name              VARCHAR NOT NULL,
     weight            DOUBLE DEFAULT 0,
     image             VARCHAR
-);
-
-CREATE TABLE drone_payload (
-    drone_serial_no          VARCHAR NOT NULL,
-    payload_id                VARCHAR NOT NULL
 );
 
 CREATE TABLE medication_payload (

@@ -1,16 +1,20 @@
 package com.musalasoft.drone.station.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "current_payload")
 public class Payload {
 
     @Id
+    @Column(name = "payload_id")
     private String id;
+
+    @OneToOne
+    @JoinColumn(name = "drone_serial_no")
+    private Drone drone;
 
     @Transient
     private List<Medication> medications;
