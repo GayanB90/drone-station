@@ -4,12 +4,18 @@ import com.musalasoft.drone.station.util.MedicationFieldsValidatorUtil;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.Objects;
 
 @Entity
 public class Medication {
     private String name;
     private double weight;
+
+    @ManyToOne
+    @JoinColumn(name = "payload_id")
+    private Payload payload;
 
     @Id
     private String code;

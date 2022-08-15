@@ -16,7 +16,7 @@ public class Payload {
     @JoinColumn(name = "drone_serial_no")
     private Drone drone;
 
-    @Transient
+    @OneToMany(targetEntity = Medication.class, mappedBy = "payload")
     private List<Medication> medications;
 
     public Payload() {

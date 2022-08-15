@@ -15,7 +15,8 @@ CREATE TABLE medication (
     code              VARCHAR NOT NULL PRIMARY KEY,
     name              VARCHAR NOT NULL,
     weight            DOUBLE DEFAULT 0,
-    image             VARCHAR
+    image             VARCHAR,
+    payload_id                VARCHAR NOT NULL
 );
 
 CREATE TABLE medication_payload (
