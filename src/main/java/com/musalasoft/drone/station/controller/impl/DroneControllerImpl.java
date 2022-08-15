@@ -58,4 +58,11 @@ public class DroneControllerImpl implements DroneController {
     public Iterable<Drone> getAllAvailableDrones() {
         return droneRepository.findAllAvailable();
     }
+
+    @Override
+    public DroneBatteryLevelResp checkDroneBatteryLevel(String droneSerialNo) {
+        Drone drone = droneRepository.findBySerialNo(droneSerialNo);
+        return new DroneBatteryLevelResp(droneSerialNo, drone.getBatteryLevel(),
+                new Timestamp(System.currentTimeMillis()));
+    }
 }

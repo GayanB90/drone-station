@@ -23,10 +23,15 @@ public interface DroneController {
     @RequestMapping(name = "checkDroneCargo", value = "/drone/cargo/{droneSerialNo}", method = RequestMethod.GET,
             produces = "application/json")
     @ResponseBody
-    Payload getPayloadContents(@RequestParam String droneSerialNo);
+    Payload getPayloadContents(@PathVariable(name = "droneSerialNo") String droneSerialNo);
 
     @RequestMapping(name = "checkAvailability", value = "/drone/available", method = RequestMethod.GET,
             produces = "application/json")
     @ResponseBody
     Iterable<Drone> getAllAvailableDrones();
+
+    @RequestMapping(name = "checkBattery", value = "/drone/batterylevel/{droneSerialNo}", method = RequestMethod.GET,
+            produces = "application/json")
+    @ResponseBody
+    DroneBatteryLevelResp checkDroneBatteryLevel(@PathVariable(name = "droneSerialNo") String droneSerialNo);
 }
