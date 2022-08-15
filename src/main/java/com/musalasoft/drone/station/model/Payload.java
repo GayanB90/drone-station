@@ -16,8 +16,8 @@ public class Payload {
     @Column(name = "received_time")
     private Timestamp receivedTime;
 
-    @OneToMany(targetEntity = Medication.class, mappedBy = "payload", fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "payload_id")
     private List<Medication> medications;
 
     public Payload() {
