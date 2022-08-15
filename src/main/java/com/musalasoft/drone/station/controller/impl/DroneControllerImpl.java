@@ -5,6 +5,8 @@ import com.musalasoft.drone.station.model.*;
 import com.musalasoft.drone.station.repository.DroneRepository;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class DroneControllerImpl implements DroneController {
     private final DroneRepository droneRepository;
@@ -26,5 +28,10 @@ public class DroneControllerImpl implements DroneController {
     @Override
     public LoadDroneResponse loadPayloadToDrone(LoadDroneRequest loadDroneRequest) {
         return null;
+    }
+
+    @Override
+    public Iterable<Drone> getAllDrones() {
+        return droneRepository.findAll();
     }
 }

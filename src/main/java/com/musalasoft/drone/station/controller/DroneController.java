@@ -6,6 +6,8 @@ import com.musalasoft.drone.station.model.LoadDroneRequest;
 import com.musalasoft.drone.station.model.LoadDroneResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 public interface DroneController {
     @RequestMapping(name = "registerDrone", value = "/drone/register", method = RequestMethod.POST,
@@ -17,4 +19,9 @@ public interface DroneController {
             produces = "application/json", consumes = "application/json")
     @ResponseBody
     LoadDroneResponse loadPayloadToDrone(@RequestBody LoadDroneRequest loadDroneRequest);
+
+    @RequestMapping(name = "getAllDrones", value = "/drone/all", method = RequestMethod.GET,
+            produces = "application/json")
+    @ResponseBody
+    Iterable<Drone> getAllDrones();
 }
