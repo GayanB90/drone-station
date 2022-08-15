@@ -1,11 +1,9 @@
 package com.musalasoft.drone.station.model;
 
 import com.musalasoft.drone.station.util.MedicationFieldsValidatorUtil;
+import org.hibernate.boot.model.source.spi.MapsIdSource;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -15,6 +13,7 @@ public class Medication {
 
     @ManyToOne
     @JoinColumn(name = "payload_id")
+    @MapsId("payload.id")
     private Payload payload;
 
     @Id

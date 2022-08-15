@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DroneRepository extends CrudRepository<Drone, String> {
+    Drone findBySerialNo(String serialNo);
     Iterable<Drone> findAll();
 }

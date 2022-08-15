@@ -14,7 +14,9 @@ public class Drone {
     private DroneState state;
     private double batteryLevel;
 
-    @OneToOne(mappedBy = "drone")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "drone_payload", joinColumns = @JoinColumn(name = "drone"),
+            inverseJoinColumns = @JoinColumn(name = "payload_id"))
     private Payload payload;
 
     public Drone() {
@@ -32,12 +34,21 @@ public class Drone {
         this.state = DroneState.IDLE;
     }
 
+    public void setSerialNo(String serialNo) {
+        this.serialNo = serialNo;
+    }
+
+
     public String getSerialNo() {
         return serialNo;
     }
 
     public DroneModel getModel() {
         return model;
+    }
+
+    public void setModel(DroneModel model) {
+        this.model = model;
     }
 
     public double getBatteryLevel() {

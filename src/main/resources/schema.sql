@@ -8,7 +8,12 @@ CREATE TABLE drone (
 
 CREATE TABLE current_payload (
     payload_id                VARCHAR NOT NULL PRIMARY KEY,
-    drone_serial_no          VARCHAR NOT NULL UNIQUE
+    received_time             TIMESTAMP NOT NULL
+);
+
+CREATE TABLE drone_payload (
+    drone             VARCHAR NOT NULL,
+    payload_id        VARCHAR NOT NULL
 );
 
 CREATE TABLE medication (

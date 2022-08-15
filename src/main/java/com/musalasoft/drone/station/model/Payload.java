@@ -1,6 +1,7 @@
 package com.musalasoft.drone.station.model;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,11 +13,11 @@ public class Payload {
     @Column(name = "payload_id")
     private String id;
 
-    @OneToOne
-    @JoinColumn(name = "drone_serial_no")
-    private Drone drone;
+    @Column(name = "received_time")
+    private Timestamp receivedTime;
 
-    @OneToMany(targetEntity = Medication.class, mappedBy = "payload")
+    @OneToMany(targetEntity = Medication.class, mappedBy = "payload", fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Medication> medications;
 
     public Payload() {
@@ -36,6 +37,14 @@ public class Payload {
 
     public void setMedications(List<Medication> medications) {
         this.medications = medications;
+    }
+
+    public Timestamp getReceivedTime() {
+        return receivedTime;
+    }
+
+    public void setReceivedTime(Timestamp receivedTime) {
+        this.receivedTime = receivedTime;
     }
 
     public double calculateWeight() {
@@ -62,6 +71,7 @@ public class Payload {
     public String toString() {
         return "Payload{" +
                 "id='" + id + '\'' +
+                ", receivedTime=" + receivedTime +
                 ", medications=" + medications +
                 '}';
     }

@@ -1,9 +1,6 @@
 package com.musalasoft.drone.station.controller;
 
-import com.musalasoft.drone.station.model.Drone;
-import com.musalasoft.drone.station.model.DroneRegisterResponse;
-import com.musalasoft.drone.station.model.LoadDroneRequest;
-import com.musalasoft.drone.station.model.LoadDroneResponse;
+import com.musalasoft.drone.station.model.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,4 +21,9 @@ public interface DroneController {
             produces = "application/json")
     @ResponseBody
     Iterable<Drone> getAllDrones();
+
+    @RequestMapping(name = "checkDroneCargo", value = "/drone/cargo/{droneSerialNo}", method = RequestMethod.GET,
+            produces = "application/json")
+    @ResponseBody
+    Payload getPayloadContents(@RequestParam String droneSerialNo);
 }
