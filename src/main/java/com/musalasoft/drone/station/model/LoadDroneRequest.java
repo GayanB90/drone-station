@@ -1,8 +1,8 @@
 package com.musalasoft.drone.station.model;
 
 public class LoadDroneRequest {
-    private String droneSerialNo;
-    private Payload payload;
+    private final String droneSerialNo;
+    private final Payload payload;
 
     public LoadDroneRequest(String droneSerialNo, Payload payload) {
         this.droneSerialNo = droneSerialNo;
