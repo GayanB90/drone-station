@@ -56,9 +56,19 @@ public class DroneControllerImpl implements DroneController {
         if (drone.getBatteryLevel() < MINIMUM_BATTERY_LEVEL_FOR_LOAD) {
             new LoadDroneResponse(loadDroneRequest.getDroneSerialNo(), DroneRequestStatus.DRONE_BATTERY_INSUFFICIENT);
         }
-        payloadRepository.save(loadDroneRequest.getPayload());
-        medicationRepository.saveAll(loadDroneRequest.getPayload().getMedications());
-        return new LoadDroneResponse(loadDroneRequest.getDroneSerialNo(), DroneRequestStatus.SUCCESS);
+        try {
+            loadDroneRequest.getPayload().getMedications()
+                    .forEach(m -> m.setPayloadId(loadDroneRequest.getPayload().getId()));
+            payloadRepository.save(loadDroneRequest.getPayload());
+            drone.setPayload(loadDroneRequest.getPayload());
+            drone.setState(DroneState.LOADING);
+            droneRepository.save(drone);
+            //drone specific communication to actually load the drone with the payload should go here
+            return new LoadDroneResponse(loadDroneRequest.getDroneSerialNo(), DroneRequestStatus.SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new LoadDroneResponse(loadDroneRequest.getDroneSerialNo(), DroneRequestStatus.FAILURE);
+        }
     }
 
     private boolean droneCapacityExceeded(LoadDroneRequest loadDroneRequest, Drone drone) {

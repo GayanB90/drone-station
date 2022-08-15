@@ -1,24 +1,20 @@
 package com.musalasoft.drone.station.model;
 
 import com.musalasoft.drone.station.util.MedicationFieldsValidatorUtil;
-import org.hibernate.boot.model.source.spi.MapsIdSource;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 public class Medication {
-    private String name;
-    private double weight;
-
-    @ManyToOne
-    @JoinColumn(name = "payload_id")
-    @MapsId("payload.id")
-    private Payload payload;
 
     @Id
     private String code;
     private String image;
+    private String name;
+    private double weight;
+    @Column(name = "payload_id")
+    private String payloadId;
 
     public Medication() {
     }
@@ -50,6 +46,14 @@ public class Medication {
 
     public String getImage() {
         return image;
+    }
+
+    public String getPayloadId() {
+        return payloadId;
+    }
+
+    public void setPayloadId(String payloadId) {
+        this.payloadId = payloadId;
     }
 
     @Override
