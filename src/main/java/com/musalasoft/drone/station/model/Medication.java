@@ -2,13 +2,21 @@ package com.musalasoft.drone.station.model;
 
 import com.musalasoft.drone.station.util.MedicationFieldsValidatorUtil;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
 public class Medication {
-    private final String name;
-    private final double weight;
-    private final String code;
-    private final String image;
+    private String name;
+    private double weight;
+
+    @Id
+    private String code;
+    private String image;
+
+    public Medication() {
+    }
 
     public Medication(String name, double weight, String code, String image) {
         if (Objects.isNull(name) || MedicationFieldsValidatorUtil.validateMedicationName(name)) {
