@@ -2,7 +2,8 @@ CREATE TABLE drone (
     serial_no          VARCHAR NOT NULL PRIMARY KEY,
     model             INTEGER NOT NULL,
     state             INTEGER NOT NULL,
-    current_payload_id  VARCHAR
+    current_payload_id  VARCHAR,
+    battery_level      DOUBLE
 );
 
 CREATE TABLE payload (
