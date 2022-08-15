@@ -26,6 +26,11 @@ public enum DroneRequestStatus {
         public String getReason() {
             return "Request rejected due to drone battery level being insufficient!";
         }
+    }, INVALID_DRONE_STATE {
+        @Override
+        public String getReason() {
+            return "The drone being requested is in an invalid state for the requested operation!";
+        }
     };
 
     public abstract String getReason();

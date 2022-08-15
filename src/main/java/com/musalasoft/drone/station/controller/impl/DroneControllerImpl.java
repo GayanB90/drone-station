@@ -47,6 +47,9 @@ public class DroneControllerImpl implements DroneController {
     @Override
     public LoadDroneResponse loadPayloadToDrone(LoadDroneRequest loadDroneRequest) {
         Drone drone = droneRepository.findBySerialNo(loadDroneRequest.getDroneSerialNo());
+        if (!DroneState.IDLE.equals(drone.getState())) {
+            new LoadDroneResponse(loadDroneRequest.getDroneSerialNo(), DroneRequestStatus.INVALID_DRONE_STATE);
+        }
         if (droneCapacityExceeded(loadDroneRequest, drone)) {
             new LoadDroneResponse(loadDroneRequest.getDroneSerialNo(), DroneRequestStatus.DRONE_CAPACITY_EXCEEDED);
         }
@@ -55,7 +58,7 @@ public class DroneControllerImpl implements DroneController {
         }
         payloadRepository.save(loadDroneRequest.getPayload());
         medicationRepository.saveAll(loadDroneRequest.getPayload().getMedications());
-        return null;
+        return new LoadDroneResponse(loadDroneRequest.getDroneSerialNo(), DroneRequestStatus.SUCCESS);
     }
 
     private boolean droneCapacityExceeded(LoadDroneRequest loadDroneRequest, Drone drone) {
