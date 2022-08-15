@@ -1,0 +1,10 @@
+INSERT INTO drone (serialNo, model, state, currentPayloadId) VALUES ('LW2020AS5578', 'LightWeight', 'IDLE', NULL);
+INSERT INTO drone (serialNo, model, state, currentPayloadId) VALUES   ('MW2019BC7790', 'MiddleWeight', 'IDLE', NULL);
+INSERT INTO drone (serialNo, model, state, currentPayloadId) VALUES   ('CW2019DC8840', 'CruiserWeight', 'IDLE', NULL);
+INSERT INTO drone (serialNo, model, state, currentPayloadId) VALUES   ('HW2022RC9920', 'HeavyWeight', 'IDLE', NULL);
+INSERT INTO drone (serialNo, model, state, currentPayloadId) VALUES   ('LW2021AS5548', 'LightWeight', 'IDLE', NULL);
+INSERT INTO drone (serialNo, model, state, currentPayloadId) VALUES   ('MW2016BC7730', 'MiddleWeight', 'IDLE', NULL);
+INSERT INTO drone (serialNo, model, state, currentPayloadId) VALUES   ('CW2022DC8850', 'CruiserWeight', 'IDLE', NULL);
+INSERT INTO drone (serialNo, model, state, currentPayloadId) VALUES   ('HW2021RC9910', 'HeavyWeight', 'IDLE', NULL);
+INSERT INTO drone (serialNo, model, state, currentPayloadId) VALUES   ('LW2017AS5558', 'LightWeight', 'IDLE', NULL);
+INSERT INTO drone (serialNo, model, state, currentPayloadId) VALUES   ('MW2020BC7760', 'MiddleWeight', 'IDLE', NULL);
