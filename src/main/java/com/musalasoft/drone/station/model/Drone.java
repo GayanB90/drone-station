@@ -15,9 +15,8 @@ public class Drone {
     private String serialNo;
     private  DroneModel model;
     private DroneState state;
-
-    @Transient
     private double batteryLevel;
+
     @Transient
     private Payload payload;
 
@@ -49,6 +48,10 @@ public class Drone {
     }
 
     public void setBatteryLevel(double batteryLevel) {
+        if (( batteryLevel < 0 || batteryLevel > 100 )) {
+            throw new RuntimeException("Invalid battery level, cannot be less than zero or greater than 100"
+                    + batteryLevel);
+        }
         this.batteryLevel = batteryLevel;
     }
 
