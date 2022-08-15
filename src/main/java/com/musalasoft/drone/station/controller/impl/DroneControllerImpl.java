@@ -53,4 +53,9 @@ public class DroneControllerImpl implements DroneController {
         }
         return drone.getPayload();
     }
+
+    @Override
+    public Iterable<Drone> getAllAvailableDrones() {
+        return droneRepository.findAllAvailable();
+    }
 }

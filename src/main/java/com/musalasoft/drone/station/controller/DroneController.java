@@ -3,8 +3,6 @@ package com.musalasoft.drone.station.controller;
 import com.musalasoft.drone.station.model.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 
 public interface DroneController {
     @RequestMapping(name = "registerDrone", value = "/drone/register", method = RequestMethod.POST,
@@ -26,4 +24,9 @@ public interface DroneController {
             produces = "application/json")
     @ResponseBody
     Payload getPayloadContents(@RequestParam String droneSerialNo);
+
+    @RequestMapping(name = "checkAvailability", value = "/drone/available", method = RequestMethod.GET,
+            produces = "application/json")
+    @ResponseBody
+    Iterable<Drone> getAllAvailableDrones();
 }
