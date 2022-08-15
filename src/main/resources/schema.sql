@@ -16,6 +16,14 @@ CREATE TABLE drone_payload (
     payload_id        VARCHAR NOT NULL
 );
 
+ALTER TABLE drone_payload
+    ADD FOREIGN KEY (drone)
+    REFERENCES drone(serial_no);
+
+ALTER TABLE drone_payload
+    ADD FOREIGN KEY (payload_id)
+    REFERENCES current_payload(payload_id);
+
 CREATE TABLE medication (
     code              VARCHAR NOT NULL PRIMARY KEY,
     name              VARCHAR NOT NULL,
@@ -24,7 +32,6 @@ CREATE TABLE medication (
     payload_id                VARCHAR NOT NULL
 );
 
-CREATE TABLE medication_payload (
-    droneSerial_no          VARCHAR NOT NULL,
-    medication_code              VARCHAR NOT NULL
-);
+ALTER TABLE medication
+    ADD FOREIGN KEY (payload_id)
+    REFERENCES current_payload(payload_id);
