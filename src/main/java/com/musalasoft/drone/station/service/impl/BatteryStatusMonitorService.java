@@ -2,6 +2,9 @@ package com.musalasoft.drone.station.service.impl;
 
 import com.musalasoft.drone.station.model.Drone;
 import com.musalasoft.drone.station.repository.DroneRepository;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +18,7 @@ import java.util.stream.StreamSupport;
 
 @Component
 public class BatteryStatusMonitorService {
+    private static final Logger logger = LogManager.getLogger(BatteryStatusMonitorService.class);
 
     private final DroneRepository droneRepository;
 
@@ -27,13 +31,18 @@ public class BatteryStatusMonitorService {
 
     @PostConstruct
     public void startBatteryStatusMonitoringService() {
+        logger.info("Starting periodic battery status monitoring thread");
         executorService.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
                 try {
+                    logger.info("Starting battery monitoring cycle at {}",
+                            new Timestamp(System.currentTimeMillis()));
                     String batteryStatus = extractDroneBatteryStatusString();
+                    logger.log(Level.getLevel("AUDIT"), batteryStatus);
+                    logger.info("Entered the audit log entry for battery levels successfully");
                 } catch (Throwable throwable) {
-                    throwable.printStackTrace();
+                    logger.error("Unexpected error occurred while monitoring the battery status", throwable);
                 }
             }
         }, 0, 60000, TimeUnit.MILLISECONDS);
