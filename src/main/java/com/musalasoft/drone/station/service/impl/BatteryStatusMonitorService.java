@@ -39,7 +39,7 @@ public class BatteryStatusMonitorService {
                     logger.info("Starting battery monitoring cycle at {}",
                             new Timestamp(System.currentTimeMillis()));
                     String batteryStatus = extractDroneBatteryStatusString();
-                    logger.log(Level.getLevel("AUDIT"), batteryStatus);
+                    logger.log(Level.forName("AUDIT", 900), batteryStatus);
                     logger.info("Entered the audit log entry for battery levels successfully");
                 } catch (Throwable throwable) {
                     logger.error("Unexpected error occurred while monitoring the battery status", throwable);
