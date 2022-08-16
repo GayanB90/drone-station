@@ -26,6 +26,11 @@ public class DroneControllerImpl implements DroneController {
         this.payloadRepository = payloadRepository;
     }
 
+    /**
+     * This method persists a given drone to the DB
+     * @param drone
+     * @return
+     */
     @Override
     public DroneRegisterResponse registerDrone(Drone drone) {
         logger.info("Request received to register a new drone, {}", drone);
@@ -40,12 +45,25 @@ public class DroneControllerImpl implements DroneController {
         }
     }
 
+    /**
+     * This method sets the current timestamp as the received date of a payload if no value is already provided.
+     * @param drone
+     */
     private void initializePayloadTimestamp(Drone drone) {
         if (Objects.nonNull(drone.getPayload()) && Objects.isNull(drone.getPayload().getReceivedTime())) {
             drone.getPayload().setReceivedTime(new Timestamp(System.currentTimeMillis()));
         }
     }
 
+    /**
+     * This method loads a given payload to the provided drone. Payload is validated before actual loading is
+     * initiated. In order for the drone to be eligible for the suggested load it's battery level must be above
+     * 25% and it must be in idle state. If the payload weight exceeds the suggested drones carrying capacity
+     * the payload is rejected. If all validations have been passed, the drone will enter 'LOADING' state and
+     * new state will be persisted in the DB. Upon successful loading controller will return success resp.
+     * @param loadDroneRequest
+     * @return
+     */
     @Override
     public LoadDroneResponse loadPayloadToDrone(LoadDroneRequest loadDroneRequest) {
         logger.info("Request received to load the payload {}", loadDroneRequest);
