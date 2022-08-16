@@ -2,6 +2,7 @@ package com.musalasoft.drone.station.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,6 +29,9 @@ public class Payload {
     }
 
     public List<Medication> getMedications() {
+        if (Objects.isNull(medications)) {
+            return Collections.emptyList();
+        }
         return medications;
     }
 

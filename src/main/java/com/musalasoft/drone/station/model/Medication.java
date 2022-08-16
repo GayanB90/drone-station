@@ -20,10 +20,10 @@ public class Medication {
     }
 
     public Medication(String name, double weight, String code, String image) {
-        if (Objects.isNull(name) || MedicationFieldsValidatorUtil.validateMedicationName(name)) {
+        if (Objects.isNull(name) || !MedicationFieldsValidatorUtil.validateMedicationName(name)) {
             throw new RuntimeException("Invalid medication name provided, " + name);
         }
-        if (Objects.isNull(code) || MedicationFieldsValidatorUtil.validateMedicationCode(code)) {
+        if (Objects.isNull(code) || !MedicationFieldsValidatorUtil.validateMedicationCode(code)) {
             throw new RuntimeException("Invalid medication code provided, " + code);
         }
         this.name = name;

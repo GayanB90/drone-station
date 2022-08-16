@@ -3,7 +3,6 @@ package com.musalasoft.drone.station.controller.impl;
 import com.musalasoft.drone.station.controller.DroneController;
 import com.musalasoft.drone.station.model.*;
 import com.musalasoft.drone.station.repository.DroneRepository;
-import com.musalasoft.drone.station.repository.MedicationRepository;
 import com.musalasoft.drone.station.repository.PayloadRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,8 +21,7 @@ public class DroneControllerImpl implements DroneController {
     private final DroneRepository droneRepository;
     private final PayloadRepository payloadRepository;
 
-    public DroneControllerImpl(DroneRepository droneRepository, MedicationRepository medicationRepository,
-                               PayloadRepository payloadRepository) {
+    public DroneControllerImpl(DroneRepository droneRepository, PayloadRepository payloadRepository) {
         this.droneRepository = droneRepository;
         this.payloadRepository = payloadRepository;
     }
@@ -52,20 +50,9 @@ public class DroneControllerImpl implements DroneController {
     public LoadDroneResponse loadPayloadToDrone(LoadDroneRequest loadDroneRequest) {
         logger.info("Request received to load the payload {}", loadDroneRequest);
         Drone drone = droneRepository.findBySerialNo(loadDroneRequest.getDroneSerialNo());
-        if (!DroneState.IDLE.equals(drone.getState())) {
-            logger.warn("Payload load failed due to invalid drone state {} {}", drone.getSerialNo(),
-                    drone.getState());
-            new LoadDroneResponse(loadDroneRequest.getDroneSerialNo(), DroneRequestStatus.INVALID_DRONE_STATE);
-        }
-        if (droneCapacityExceeded(loadDroneRequest, drone)) {
-            logger.warn("Payload load failed due to capacity exceeded {} {}", drone.getSerialNo(),
-                    drone.getModel().getCapacityInKilos());
-            new LoadDroneResponse(loadDroneRequest.getDroneSerialNo(), DroneRequestStatus.DRONE_CAPACITY_EXCEEDED);
-        }
-        if (drone.getBatteryLevel() < MINIMUM_BATTERY_LEVEL_FOR_LOAD) {
-            logger.warn("Payload load failed due to low battery {} {}", drone.getSerialNo(),
-                    drone.getBatteryLevel());
-            new LoadDroneResponse(loadDroneRequest.getDroneSerialNo(), DroneRequestStatus.DRONE_BATTERY_INSUFFICIENT);
+        LoadDroneResponse result = validateDronePayload(loadDroneRequest, drone);
+        if (Objects.nonNull(result)) {
+            return result;
         }
         try {
             loadDroneRequest.getPayload().getMedications()
@@ -82,6 +69,25 @@ public class DroneControllerImpl implements DroneController {
             logger.error("Unexpected error occurred while loading the payload", e);
             return new LoadDroneResponse(loadDroneRequest.getDroneSerialNo(), DroneRequestStatus.FAILURE);
         }
+    }
+
+    private LoadDroneResponse validateDronePayload(LoadDroneRequest loadDroneRequest, Drone drone) {
+        if (!DroneState.IDLE.equals(drone.getState())) {
+            logger.warn("Payload load failed due to invalid drone state {} {}", drone.getSerialNo(),
+                    drone.getState());
+            return new LoadDroneResponse(loadDroneRequest.getDroneSerialNo(), DroneRequestStatus.INVALID_DRONE_STATE);
+        }
+        if (droneCapacityExceeded(loadDroneRequest, drone)) {
+            logger.warn("Payload load failed due to capacity exceeded {} {}", drone.getSerialNo(),
+                    drone.getModel().getCapacityInKilos());
+            return new LoadDroneResponse(loadDroneRequest.getDroneSerialNo(), DroneRequestStatus.DRONE_CAPACITY_EXCEEDED);
+        }
+        if (drone.getBatteryLevel() < MINIMUM_BATTERY_LEVEL_FOR_LOAD) {
+            logger.warn("Payload load failed due to low battery {} {}", drone.getSerialNo(),
+                    drone.getBatteryLevel());
+            return new LoadDroneResponse(loadDroneRequest.getDroneSerialNo(), DroneRequestStatus.DRONE_BATTERY_INSUFFICIENT);
+        }
+        return null;
     }
 
     private boolean droneCapacityExceeded(LoadDroneRequest loadDroneRequest, Drone drone) {
